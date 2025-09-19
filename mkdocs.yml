@@ -1,0 +1,46 @@
+site_name: AWS Notes
+nav:
+  - Storage:
+      - Part 1: storage/storage-part1.md
+      - Part 2: storage/storage-part2.md
+      - Advanced: storage/storage-advance.md
+      - Internals: storage/storage-internals.md
+  - Compute:
+      - Part 1: compute/compute-part1.md
+      - Part 2: compute/compute-part2.md
+      - Advanced: compute/compute-advance.md
+      - Internals: compute/compute-internals.md
+  - Network:
+      - Part 1: network/network-part1.md
+      - Part 2: network/network-part2.md
+      - Advanced: network/network-advance.md
+      - Internals: network/network-internals.md
+  - IAM:
+      - Part 1: iam/iam-part1.md
+      - Part 2: iam/iam-part2.md
+      - Advanced: iam/iam-advance.md
+      - Internals: iam/iam-internals.md
+  - Databases:
+      - Part 1: databases/databases-part1.md
+      - Part 2: databases/databases-part2.md
+      - Advanced: databases/databases-advance.md
+      - Internals: databases/databases-internals.md
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: orange
+      accent: deep orange
+  features:
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - toc.integrate
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
