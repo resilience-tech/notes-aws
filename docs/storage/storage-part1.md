@@ -181,7 +181,7 @@ aws s3 cp file.txt s3://my-bucket/file.txt --metadata key1=value1,key2=value2
 | **Reduced Redundancy** | Non-critical (deprecated) | Immediate | None | Medium |
 
 
-![alt text](images/s3-1.drawio.svg)
+![alt text](images/s3-1.svg)
 
 ### Archive Storage Classes
 | Storage Class | Use Case | Retrieval Time | Min Storage Duration | Cost |
