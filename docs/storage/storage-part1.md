@@ -15,6 +15,20 @@ This document covers the fundamental concepts of AWS storage services, focusing 
 | **Amazon EFS** | File Storage | Shared file storage for EC2 | 99.999999999% (11 9's) | 99.99% |
 | **Amazon FSx** | File Storage | High-performance workloads | 99.999999999% (11 9's) | 99.99% |
 
+---
+
+**Amazon S3 (Object Storage):**  
+Amazon S3 is designed for storing and retrieving any amount of data as objects, making it ideal for use cases such as hosting static website assets (images, HTML files) and providing highly available, durable storage for global access. Its scalability and integration with web protocols make it a popular choice for backup, archiving, and content distribution.
+
+**Amazon EBS (Block Storage):**  
+Amazon EBS provides persistent block-level storage volumes for EC2 instances, commonly used to store operating system files and application data. A typical use case is attaching an EBS volume as the root disk of an EC2 instance, ensuring data durability and availability even if the instance is stopped or restarted.
+
+**Amazon EFS (File Storage):**  
+Amazon EFS offers a scalable, shared file system accessible by multiple EC2 instances simultaneously. It is well-suited for scenarios like storing user home directories in web applications, enabling concurrent access and seamless scaling for workloads that require POSIX-compliant file storage.
+
+**Amazon FSx (File Storage):**  
+Amazon FSx delivers managed file systems optimized for high-performance workloads. For example, FSx for Lustre is used in big data analytics and high-performance computing environments to accelerate data processing, while FSx for Windows File Server supports enterprise applications requiring SMB protocol and Active Directory integration.
+
 ### Storage Types Comparison
 ```bash
 Object Storage (S3):
@@ -39,6 +53,76 @@ File Storage (EFS/FSx):
 ---
 
 ## Amazon S3 Fundamentals
+
+### S3 REST API In-Depth
+
+Amazon S3 provides a RESTful API for programmatic access to buckets and objects. The API uses standard HTTP methods (GET, PUT, POST, DELETE, HEAD) and supports authentication via AWS Signature Version 4.
+
+#### Key Operations
+| HTTP Method | Purpose |
+|-------------|---------|
+| **PUT**     | Upload or create an object |
+| **GET**     | Retrieve/download an object |
+| **DELETE**  | Delete an object |
+| **HEAD**    | Retrieve object metadata |
+| **GET**     | List objects in a bucket |
+| **PUT**     | Create a bucket |
+
+#### Object Path and Key Prefix
+
+- **Object Path**: In S3, each object is stored in a bucket and identified by a unique key (the full path to the object within the bucket).  
+  *Example*:  
+  - Bucket: `my-bucket`
+  - Key: `images/photo.jpg`
+  - S3 URL: `s3://my-bucket/images/photo.jpg`
+
+- **Key Prefix**: A prefix is a string that filters objects within a bucket, similar to a folder path. Listing objects with a prefix returns only those whose keys start with that prefix.  
+  *Example*:  
+  - Prefix: `images/`
+  - Listing with prefix returns:  
+    - `images/photo.jpg`
+    - `images/logo.png`
+    - `images/2024/banner.jpg`
+
+This allows you to organize and retrieve objects efficiently using logical paths.
+
+- Requests must be signed using AWS credentials (access key, secret key).
+- Signature is included in the `Authorization` header.
+- Example:  
+  `Authorization: AWS4-HMAC-SHA256 Credential=AKIA..., SignedHeaders=host;x-amz-date, Signature=...`
+
+#### Example: Upload Object (PUT)
+
+```http
+PUT /my-bucket/my-object HTTP/1.1
+Host: my-bucket.s3.amazonaws.com
+x-amz-date: 20240601T120000Z
+Authorization: AWS4-HMAC-SHA256 Credential=..., SignedHeaders=..., Signature=...
+Content-Type: text/plain
+
+Hello, S3!
+```
+
+#### Example: List Objects (GET)
+
+```http
+GET /my-bucket?list-type=2 HTTP/1.1
+Host: my-bucket.s3.amazonaws.com
+x-amz-date: 20240601T120000Z
+Authorization: AWS4-HMAC-SHA256 Credential=..., SignedHeaders=..., Signature=...
+```
+
+#### Features
+
+- Supports multipart uploads for large files.
+- Enables object versioning, tagging, and metadata management.
+- Allows presigned URLs for temporary access.
+- Integrates with IAM, bucket policies, and ACLs for access control.
+
+#### References
+
+- [S3 REST API Docs](https://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html)
+- [AWS Signature Version 4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html)
 
 ### Core Concepts
 ```bash
@@ -95,6 +179,9 @@ aws s3 cp file.txt s3://my-bucket/file.txt --metadata key1=value1,key2=value2
 | **Standard-IA** | Infrequently accessed | Immediate | 30 days | Medium |
 | **One Zone-IA** | Non-critical, infrequent | Immediate | 30 days | Lower |
 | **Reduced Redundancy** | Non-critical (deprecated) | Immediate | None | Medium |
+
+
+![alt text](images/s3-1.drawio.svg)
 
 ### Archive Storage Classes
 | Storage Class | Use Case | Retrieval Time | Min Storage Duration | Cost |
