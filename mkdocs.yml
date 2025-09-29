@@ -1,4 +1,11 @@
-site_name: AWS Notes
+site_name: AWS Study Notes
+site_description: Comprehensive AWS certification study notes with detailed coverage of all major AWS services
+site_author: Resilience Tech
+site_url: https://resilience-tech.github.io/notes-aws/
+repo_name: resilience-tech/notes-aws
+repo_url: https://github.com/resilience-tech/notes-aws
+edit_uri: edit/main/docs/
+
 nav:
   - Storage:
       - Part 1: storage/storage-part1.md
@@ -27,20 +34,95 @@ nav:
       - Internals: databases/databases-internals.md
 theme:
   name: material
+  language: en
   palette:
     - scheme: slate
       primary: orange
       accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: orange
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
   features:
     - navigation.tabs
     - navigation.top
+    - navigation.sections
+    - navigation.expand
+    - navigation.instant
+    - navigation.tracking
     - search.suggest
     - search.highlight
+    - search.share
     - toc.integrate
+    - content.code.copy
+    - content.action.edit
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
 markdown_extensions:
   - admonition
-  - codehilite
+  - attr_list
+  - def_list
   - footnotes
+  - md_in_html
   - meta
+  - tables
   - toc:
       permalink: true
+      title: On this page
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: resilience-tech
+      repo: notes-aws
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - minify:
+      minify_html: true
+
+extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/resilience-tech/notes-aws
+      name: GitHub Repository
+  generator: false
+
+copyright: |
+  Copyright &copy; 2025 Resilience Tech –
+  <a href="#__consent">Change cookie settings</a>
