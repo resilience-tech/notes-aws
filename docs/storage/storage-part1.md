@@ -54,6 +54,35 @@ File Storage (EFS/FSx):
 
 ## Amazon S3 Fundamentals
 
+### What is a Bucket?
+Bucket:  A logical container for objects.
+A bucket is like a folder or a storage bin that holds objects (files). It’s not a physical machine — it’s a named, managed container in S3 where you put objects. Every object lives in a bucket and bucket names are globally unique.
+
+### What is an Object?
+Object: The stored item (file) + metadata + a unique key (name).
+An object is the main thing you store: the file bytes (e.g., an image or log), the metadata (extra information like content type or custom tags), and a key (the object’s name). Think: object = file + sticky notes about the file + its filename.
+
+ - Objects are immutable (you overwrite to change).
+Immutable means you cannot change the bytes of an object in place. To change it you upload a new object with the same key (which overwrites) or enable versioning to keep the old copy.
+
+- Key — the full name (path) of the object inside the bucket.
+A key is the object’s unique identifier inside the bucket. Example: images/2025/sep/photo.jpg — that full string is the key. S3 is flat (no real folders) but keys with slashes look like paths.
+
+Versioning — optional feature to keep multiple versions of an object (protects against accidental deletes/overwrites).
+If you enable versioning, every overwrite or delete creates a new version instead of permanently replacing or deleting the previous one. This lets you restore earlier versions if something is accidentally overwritten or removed.
+
+Storage class — determines cost, availability and retrieval time (e.g., STANDARD, INTELLIGENT_TIERING, STANDARD_IA, ONEZONE_IA, GLACIER/DEEP_ARCHIVE). Choose by access pattern.
+Storage class is the pricing/performance tier you pick for an object. It decides how much you pay, how quickly you can read the object, and how often the object is assumed to be accessed. Pick based on how often and how quickly you need the data.
+
+### Durability vs Availability
+S3 offers very high durability (11 nines = 99.999999999%) while availability depends on storage class and configuration.
+
+### Durability 
+Durability = probability an object will not be lost permanently. S3 is designed for extremely low data loss (what people call “11 nines”).
+
+## Availability 
+Availability = probability the object can be read now (service uptime). Availability can vary by storage class and whether the system is configured for cross-region replication, multi-AZ, etc.
+
 ### S3 REST API In-Depth
 
 Amazon S3 provides a RESTful API for programmatic access to buckets and objects. The API uses standard HTTP methods (GET, PUT, POST, DELETE, HEAD) and supports authentication via AWS Signature Version 4.
